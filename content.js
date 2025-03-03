@@ -24,7 +24,7 @@ function scrapeListings() {
         const sizeElement = listing.querySelector('.ListingMetadata-module__size___e9naE');
         const size = sizeElement ? sizeElement.innerText.trim() : 'N/A';
 
-        console.log(`Listing ${index + 1} Details:`, { title, price, designer, size });
+        // console.log(`Listing ${index + 1} Details:`, { title, price, designer, size });
 
         return { title, price, designer, size,};
     }).filter(item => item !== null); // Remove null values if any listings were skipped
