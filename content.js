@@ -16,7 +16,8 @@ function scrapeListings() {
         const title = titleElement ? titleElement.innerText.trim() : 'N/A';
 
         const priceElement = listing.querySelector('.Money-module__root___jRyq5');
-        const price = priceElement ? priceElement.innerText.trim() : 'N/A';
+        const priceText = priceElement ? priceElement.innerText.trim() : 'N/A';
+        const price = parseFloat(priceText.replace(/[^0-9.-]+/g,"")); // Convert price to a number
 
         const designerElement = listing.querySelector('.ListingMetadata-module__designer___h3Tc\\+'); // Escaping the `+`
         const designer = designerElement ? designerElement.innerText.trim() : 'N/A';
@@ -24,7 +25,7 @@ function scrapeListings() {
         const sizeElement = listing.querySelector('.ListingMetadata-module__size___e9naE');
         const size = sizeElement ? sizeElement.innerText.trim() : 'N/A';
 
-        // console.log(`Listing ${index + 1} Details:`, { title, price, designer, size });
+        console.log(`Listing ${index + 1} Details:`, { title, price, designer, size });
 
         return { title, price, designer, size,};
     }).filter(item => item !== null); // Remove null values if any listings were skipped
