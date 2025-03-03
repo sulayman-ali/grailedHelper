@@ -1,6 +1,6 @@
 function scrapeAndSortListings() {
     console.log("Scraping listings...");
-    
+    window.scrollTo(0,0); // reset back to top of page
     const listingsContainer = document.querySelector('.fitting-room-wrapper');
     if (!listingsContainer) {
         console.error("Listings container not found!");
@@ -34,4 +34,20 @@ function scrapeAndSortListings() {
     });
 }
 
-scrapeAndSortListings();
+function scrollToBottom(callback) {
+    let lastHeight = document.body.scrollHeight;
+
+    const interval = setInterval(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+
+        const newHeight = document.body.scrollHeight;
+        if (newHeight === lastHeight) {
+            clearInterval(interval);
+            callback();
+        } else{
+            lastHeight = newHeight;
+        }
+    }, 300);
+}
+
+scrollToBottom(scrapeAndSortListings);
