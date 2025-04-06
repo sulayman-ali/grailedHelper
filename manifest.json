@@ -9,11 +9,5 @@
     ],
     "action": {
       "default_popup": "popup.html"
-    },
-    "content_scripts": [
-      {
-        "matches": ["https://www.grailed.com/mygrails/*"],
-        "js": ["content.js"]
-      }
-    ]
-  }
+    }
+}
