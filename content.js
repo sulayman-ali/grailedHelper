@@ -7,37 +7,25 @@ function scrapeAndSortListings() {
         return;
     }
 
-    const listings = Array.from(document.querySelectorAll('.carousel-listing-item')); // Convert NodeList to an Array
+    const listings = Array.from(document.querySelectorAll('.carousel-listing-item'));
     console.log(`Found ${listings.length} listings`);
 
+    // Instead of cloning, store the original elements and their prices
     const sortedListings = listings.map((listing, index) => {
-        const linkElement = listing.querySelector('.listing-item-link');
-        if (!linkElement) {
-            console.warn(`Listing ${index + 1}: Missing link element`);
-            return null;
-        }
-
         const priceElement = listing.querySelector('[class^="Money-module__root"]');
-        console.log("priceElement", priceElement);
         const priceText = priceElement ? priceElement.innerText.trim() : 'N/A';
-        const price = parseFloat(priceText.replace(/[^0-9.-]+/g, "")) || 0; // Handle cases where price might be NaN
+        const price = parseFloat(priceText.replace(/[^0-9.-]+/g, "")) || 0;
 
-        // Clone the element to avoid reference issues during pagination
-        return { element: listing.cloneNode(true), price: price };
-    }).filter(item => item !== null); // Remove null values
+        return { element: listing, price: price };
+    });
 
-    sortedListings.sort((a, b) => a.price - b.price); // Sort by price ascending
+    sortedListings.sort((a, b) => a.price - b.price);
     console.log('Sorted Data', sortedListings);
 
     try {
-        // Clear and repopulate the container
-        listingsContainer.innerHTML = ''; // Clear existing listings
+        // Reorder elements without clearing the container
         sortedListings.forEach(item => {
-            try {
-                listingsContainer.appendChild(item.element);
-            } catch (e) {
-                console.warn('Failed to append listing:', e);
-            }
+            listingsContainer.appendChild(item.element);
         });
     } catch (e) {
         console.error('Error reordering listings:', e);
@@ -64,12 +52,16 @@ function scrollToBottom(callback) {
 }
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'scrape') {
-        scrollToBottom(() => {
-            scrapeAndSortListings();
-            sendResponse({status: 'success'});
-        });
-        return true; // Required for async response
+    // if (request.action === 'scrape') {
+    //     scrollToBottom(() => {
+    //         scrapeAndSortListings();
+    //         sendResponse({status: 'success'});
+    //     });
+    //     return true; // Required for async response
+    // }
+    if (request.action === 'scrape') { 
+        scrapeAndSortListings();
+        sendResponse({status: 'success'});
     }
 });
 
