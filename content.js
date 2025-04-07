@@ -1,24 +1,35 @@
-function showToast(message, duration = 3000) {
+function showToast(message, duration = 3000, type = 'success') {
     // Create toast element
     const toast = document.createElement('div');
-    toast.style.cssText = `
+    const baseStyles = `
         position: fixed;
         bottom: -100px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(8px);
-        color: #333;
         padding: 16px; 
         border-radius: 8px;
         box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
         z-index: 9999;
         opacity: 0;
         transition: all 0.3s ease-out;
-        border: 1px solid rgba(255, 255, 255, 0.2);
         max-width: 80%;
         width: max-content;
     `;
+    
+    const typeStyles = type === 'success' 
+        ? `
+            background-color: rgba(74, 222, 128, 0.2);
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            color: #166534;
+        ` 
+        : `
+            background-color: rgba(248, 113, 113, 0.2);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            color: #991b1b;
+        `;
+    
+    toast.style.cssText = baseStyles + typeStyles;
     toast.textContent = message;
     document.body.appendChild(toast);
 
@@ -65,10 +76,10 @@ function scrapeAndSortListings() {
         sortedListings.forEach(item => {
             listingsContainer.appendChild(item.element);
         });
-        showToast('🔃 Listings sorted by price!');
+        showToast('🔃 Listings sorted by price!', 3000, 'success');
     } catch (exc) {
         console.error('Error reordering listings:', exc);
-        showToast('❌ Error sorting listings', 4000);
+        showToast('❌ Error sorting listings', 4000, 'error');
     }
 }
 
