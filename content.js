@@ -9,7 +9,7 @@ function showToast(message, duration = 3000, type = 'success') {
         backdrop-filter: blur(8px);
         padding: 16px; 
         border-radius: 8px;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
         z-index: 9999;
         opacity: 0;
         transition: all 0.3s ease-out;
