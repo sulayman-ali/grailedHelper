@@ -4,9 +4,9 @@ function showToast(message, duration = 3000, type = 'success') {
     const baseStyles = `
         position: fixed;
         bottom: -100px;
-        left: 50%;
+        left: 8%;
         transform: translateX(-50%);
-        backdrop-filter: blur(8px);
+        backdrop-fiter: blur(8px);
         padding: 16px; 
         border-radius: 8px;
         box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
@@ -49,7 +49,7 @@ function showToast(message, duration = 3000, type = 'success') {
 
 function scrapeAndSortListings() {
     console.log("Scraping listings...");
-    window.scrollTo(0,0); // reset back to top of page
+    // window.scrollTo(0,0); // reset back to top of page # TODO: remove this
     const listingsContainer = document.querySelector('.fitting-room-wrapper');
     if (!listingsContainer) {
         console.error("Listings container not found!");
